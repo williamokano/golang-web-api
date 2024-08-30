@@ -16,6 +16,8 @@ This API is intended for studying purposes only. Here's a list of features that 
 
 - [ ] Simple http endpoint with json support
 - [ ] The endpoint should have validation in place
+- [ ] Should have openapi documentation
+- [ ] Add tests examples
 - [ ] Should be easily extensible
 - [ ] Must have database connection (postgresql maybe) (try avoid using ORM initially)
 - [ ] Authentication (building from zero even though isn't recommended)
