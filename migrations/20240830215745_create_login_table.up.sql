@@ -1,0 +1,9 @@
+-- Safely create the table only if it doesn't exist
+CREATE TABLE IF NOT EXISTS login (
+    username VARCHAR(255) PRIMARY KEY,
+    password VARCHAR(512) NOT NULL,
+    totp_code VARCHAR(16),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    deleted_at TIMESTAMP WITHOUT TIME ZONE
+);

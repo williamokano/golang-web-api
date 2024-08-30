@@ -4,7 +4,11 @@ This is a project for simple experimentation with golang.
 
 The objectives of this project is to make a web api that communicates using json.
 
-The API capabilites will be described below
+The API capabilities will be described below
+
+## How to create a new migration
+
+Just run `make new-migration NAME=migration_name`. It will run the docker `migrate/migrate`. Please check `Makefile`.
 
 ## Capabilities
 

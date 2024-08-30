@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -11,50 +12,56 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gin-gonic/gin"
+	"github.com/williamokano/golang-web-api/internal/database"
+	"github.com/williamokano/golang-web-api/internal/web"
 )
 
 func main() {
-	router := gin.Default()
-
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
-
-	server := &http.Server{
-		Addr:    ":8080",
-		Handler: router.Handler(),
+	// Start database
+	db, err := database.CreateDB()
+	if err != nil {
+		log.Fatal(err)
 	}
 
+	// Run migrations
+	err = database.MigrateDatabase(db)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	server := web.NewServer(db).SetupServer()
 	go func() {
 		// start listening to connections
-		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatalf("listen: %s\n", err)
 		}
 	}()
 
-	// wait for interrupt signal to gracefully shutdown the server
+	// wait for interrupt signal to gracefully shut down the server
 	// with a timeout of 5 seconds
 	quit := make(chan os.Signal, 1)
 
-	// add listener for sigint and sigterm as sigkill cannot be catch
+	// add listener for sigint and sigterm as sigkill cannot be caught
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	<-quit
 
+	<-quit
 	log.Println("Shutdown Server ...")
-	timeout := 10 * time.Second
+
+	timeout := 5 * time.Second
 	if val, ok := os.LookupEnv("SERVER_TIMEOUT"); ok {
 		if newTimeout, err := strconv.Atoi(val); err != nil {
 			timeout = time.Duration(newTimeout) * time.Second
 		}
 	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	if err := server.Shutdown(ctx); err != nil {
-		log.Fatal("Server Shutdown:", err)
-	}
+
+	go func() {
+		if err := server.Shutdown(ctx); err != nil {
+			log.Fatal("Server Shutdown:", err)
+		}
+	}()
 
 	// catch ctx.Done() with 5 seconds timeout
 	select {
