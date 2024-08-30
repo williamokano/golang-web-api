@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -42,8 +44,13 @@ func main() {
 	<-quit
 
 	log.Println("Shutdown Server ...")
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	timeout := 10 * time.Second
+	if val, ok := os.LookupEnv("SERVER_TIMEOUT"); ok {
+		if newTimeout, err := strconv.Atoi(val); err != nil {
+			timeout = time.Duration(newTimeout) * time.Second
+		}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
 		log.Fatal("Server Shutdown:", err)
@@ -52,7 +59,7 @@ func main() {
 	// catch ctx.Done() with 5 seconds timeout
 	select {
 	case <-ctx.Done():
-		log.Println("timeout of 5 seconds.")
+		log.Println(fmt.Sprintf("timeout of %.0f seconds.", timeout.Seconds()))
 	}
 	log.Println("Server exiting")
 }
