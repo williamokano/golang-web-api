@@ -19,7 +19,8 @@ This API is intended for studying purposes only. Here's a list of features that 
 - [ ] Should have openapi documentation
 - [ ] Add tests examples
 - [ ] Should be easily extensible
-- [ ] Must have database connection (postgresql maybe) (try avoid using ORM initially)
+- [x] Must have database connection (postgresql maybe) (try avoid using ORM initially)
+- [x] Database migrations added
 - [ ] Authentication (building from zero even though isn't recommended)
 - [ ] Authentication must support MFA (Multi-factor authentication)
 - [ ] Authentication should support WebAuthn with multiple keys

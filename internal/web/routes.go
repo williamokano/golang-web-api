@@ -16,6 +16,7 @@ func (app *Application) setupRootRoutes() {
 	})
 
 	loginController := controllers.NewLoginController(app.db)
+	app.router.GET("/login/:username", loginController.GetLoginByUsername)
 	app.router.GET("/login", loginController.GetLogin)
 	app.router.POST("/login", loginController.DoLogin)
 }

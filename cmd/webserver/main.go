@@ -19,6 +19,7 @@ import (
 func main() {
 	// Start database
 	db, err := database.CreateDB()
+	defer db.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -58,6 +59,8 @@ func main() {
 	defer cancel()
 
 	go func() {
+		db.Close()
+
 		if err := server.Shutdown(ctx); err != nil {
 			log.Fatal("Server Shutdown:", err)
 		}
