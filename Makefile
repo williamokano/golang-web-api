@@ -9,5 +9,5 @@ help:
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: new-migration
-new-migration:
+new-migration:  ## Create a new migration NAME=migration-name
 	docker run -v $(PWD)/migrations:/migrations migrate/migrate create -ext sql -dir /migrations $(NAME)

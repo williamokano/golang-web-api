@@ -1,0 +1,28 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/tasks": {
+            "get": {
+                "description": "Get a list of all tasks that wasn't deleted",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Get all tasks",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "501": {
+                        "description": "Not Implemented"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+info:
+  contact: {}
+paths:
+  /tasks:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all tasks that wasn't deleted
+      responses:
+        "200":
+          description: OK
+        "501":
+          description: Not Implemented
+      summary: Get all tasks
+      tags:
+      - tasks
+swagger: "2.0"

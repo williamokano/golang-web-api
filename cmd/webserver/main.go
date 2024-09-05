@@ -12,8 +12,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/williamokano/golang-web-api/internal/database"
-	"github.com/williamokano/golang-web-api/internal/web"
+	"github.com/williamokano/golang-web-api/config/database"
+	"github.com/williamokano/golang-web-api/config/web"
 )
 
 func main() {
