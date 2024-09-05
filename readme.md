@@ -14,9 +14,9 @@ Just run `make new-migration NAME=migration_name`. It will run the docker `migra
 
 This API is intended for studying purposes only. Here's a list of features that this api intends to have:
 
-- [ ] Simple http endpoint with json support
+- [x] Simple http endpoint with json support
 - [ ] The endpoint should have validation in place
-- [ ] Should have openapi documentation
+- [x] Should have openapi documentation
 - [ ] Add tests examples
 - [ ] Should be easily extensible
 - [x] Must have database connection (postgresql maybe) (try avoid using ORM initially)
@@ -25,7 +25,7 @@ This API is intended for studying purposes only. Here's a list of features that 
 - [ ] Authentication must support MFA (Multi-factor authentication)
 - [ ] Authentication should support WebAuthn with multiple keys
 - [ ] Authorization using either jwt/oauth2 and/or saml (RBAC initially)
-- [ ] Implement alternativa authn, like ReBAC (Zanzibar) instead of RBAC
+- [ ] Implement alternative authn, like ReBAC (Zanzibar) instead of RBAC
 - [ ] Support different communication protocols
   - [ ] GraphQL
   - [ ] gRPC
