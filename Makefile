@@ -11,3 +11,7 @@ help:
 .PHONY: new-migration
 new-migration:  ## Create a new migration NAME=migration-name
 	docker run -v $(PWD)/migrations:/migrations migrate/migrate create -ext sql -dir /migrations $(NAME)
+
+.PHONY: docs
+docs:  ## Generate the swagger updated documentation
+	go generate ./...
